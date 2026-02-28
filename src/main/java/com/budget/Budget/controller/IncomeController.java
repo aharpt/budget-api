@@ -21,4 +21,14 @@ public class IncomeController {
     public ResponseEntity<List<Income>> getIncomeByYearMonth(@RequestParam Integer year, @RequestParam Integer month) {
         return new ResponseEntity<>(incomeService.getIncomeByYearMonth(year, month), HttpStatus.OK);
     }
+
+    @PostMapping("/setIncomeByYearMonth")
+    public ResponseEntity<Void> setIncomeByYearMonth(@RequestBody Income income) {
+        try {
+            incomeService.setIncomeByYearMonth(income);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

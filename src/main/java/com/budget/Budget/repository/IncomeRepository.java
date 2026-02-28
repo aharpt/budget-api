@@ -22,7 +22,7 @@ public class IncomeRepository {
         return incomes.stream().filter(income -> ((income.getYear() == year) && (income.getMonth() == month))).toList();
     }
 
-    public void setIncomes(Income income) {
+    public void setIncomeByYearMonth(Income income) {
         incomes.add(income);
     }
 }
