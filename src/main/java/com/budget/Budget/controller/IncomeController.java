@@ -23,12 +23,11 @@ public class IncomeController {
     }
 
     @PostMapping("/setIncomeByYearMonth")
-    public ResponseEntity<Void> setIncomeByYearMonth(@RequestBody Income income) {
+    public ResponseEntity<String> setIncomeByYearMonth(@RequestBody Income income) {
         try {
-            incomeService.setIncomeByYearMonth(income);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(incomeService.setIncome(income), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Save failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
