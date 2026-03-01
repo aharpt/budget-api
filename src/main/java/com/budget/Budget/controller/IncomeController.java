@@ -22,8 +22,8 @@ public class IncomeController {
         return new ResponseEntity<>(incomeService.getIncomeByYearMonth(year, month), HttpStatus.OK);
     }
 
-    @PostMapping("/setIncomeByYearMonth")
-    public ResponseEntity<String> setIncomeByYearMonth(@RequestBody Income income) {
+    @PostMapping("/setIncome")
+    public ResponseEntity<String> setIncome(@RequestBody Income income) {
         try {
             return new ResponseEntity<>(incomeService.setIncome(income), HttpStatus.OK);
         } catch (Exception e) {
