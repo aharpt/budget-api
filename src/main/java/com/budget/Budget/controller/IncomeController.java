@@ -1,6 +1,6 @@
 package com.budget.Budget.controller;
 
-import com.budget.Budget.model.Income;
+import com.budget.Budget.model.BudgetEntry;
 import com.budget.Budget.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +18,14 @@ public class IncomeController {
     private IncomeService incomeService;
 
     @GetMapping("/getIncomeByYearMonth")
-    public ResponseEntity<List<Income>> getIncomeByYearMonth(@RequestParam Integer year, @RequestParam Integer month) {
+    public ResponseEntity<List<BudgetEntry>> getIncomeByYearMonth(@RequestParam Integer year, @RequestParam Integer month) {
         return new ResponseEntity<>(incomeService.getIncomeByYearMonth(year, month), HttpStatus.OK);
     }
 
     @PostMapping("/setIncome")
-    public ResponseEntity<String> setIncome(@RequestBody Income income) {
+    public ResponseEntity<String> setIncome(@RequestBody BudgetEntry budgetEntry) {
         try {
-            return new ResponseEntity<>(incomeService.setIncome(income), HttpStatus.OK);
+            return new ResponseEntity<>(incomeService.setIncome(budgetEntry), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Save failed due to " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }

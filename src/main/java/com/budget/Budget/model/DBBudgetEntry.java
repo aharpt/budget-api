@@ -3,8 +3,8 @@ package com.budget.Budget.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "income")
-public class DBIncome {
+@Table(name = "budgetentry")
+public class DBBudgetEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -12,11 +12,14 @@ public class DBIncome {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "plannedamount")
+    @Column(name = "budget_type")
+    private String budgetType;
+
+    @Column(name = "planned_amount")
     private String plannedAmount;
 
-    @Column(name = "remainingamount")
-    private String remainingAmounnt;
+    @Column(name = "received_amount")
+    private String receivedAmount;
 
     @Column(name = "year")
     private Integer year;
@@ -39,6 +42,14 @@ public class DBIncome {
         this.title = title;
     }
 
+    public String getBudgetType() {
+        return budgetType;
+    }
+
+    public void setBudgetType(String budgetType) {
+        this.budgetType = budgetType;
+    }
+
     public String getPlannedAmount() {
         return plannedAmount;
     }
@@ -47,12 +58,12 @@ public class DBIncome {
         this.plannedAmount = plannedAmount;
     }
 
-    public String getRemainingAmounnt() {
-        return remainingAmounnt;
+    public String getReceivedAmount() {
+        return receivedAmount;
     }
 
-    public void setRemainingAmounnt(String remainingAmounnt) {
-        this.remainingAmounnt = remainingAmounnt;
+    public void setReceivedAmount(String receivedAmount) {
+        this.receivedAmount = receivedAmount;
     }
 
     public Integer getYear() {
@@ -84,8 +95,9 @@ public class DBIncome {
         return "DBIncome{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", budgetType='" + budgetType + '\'' +
                 ", plannedAmount='" + plannedAmount + '\'' +
-                ", remainingAmounnt='" + remainingAmounnt + '\'' +
+                ", receivedAmount='" + receivedAmount + '\'' +
                 ", year=" + year +
                 ", month=" + month +
                 ", day=" + day +

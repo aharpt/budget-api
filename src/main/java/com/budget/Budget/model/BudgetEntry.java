@@ -1,18 +1,20 @@
 package com.budget.Budget.model;
 
-public class Income {
+public class BudgetEntry {
 
     private String title;
+    private String budgetType;
     private String plannedAmount;
-    private String remainingAmount;
+    private String receivedAmount;
     private int year;
     private int month;
     private int day;
 
-    public Income(String title, String plannedAmount, String remainingAmount, int year, int month, int day) {
+    public BudgetEntry(String title, String budgetType, String plannedAmount, String receivedAmount, int year, int month, int day) {
         this.title = title;
+        this.budgetType = budgetType;
         this.plannedAmount = plannedAmount;
-        this.remainingAmount = remainingAmount;
+        this.receivedAmount = receivedAmount;
         this.year = year;
         this.month = month;
         this.day = day;
@@ -26,6 +28,14 @@ public class Income {
         this.title = title;
     }
 
+    public String getBudgetType() {
+        return budgetType;
+    }
+
+    public void setBudgetType(String budgetType) {
+        this.budgetType = budgetType;
+    }
+
     public String getPlannedAmount() {
         return plannedAmount;
     }
@@ -34,12 +44,12 @@ public class Income {
         this.plannedAmount = plannedAmount;
     }
 
-    public String getRemainingAmount() {
-        return remainingAmount;
+    public String getReceivedAmount() {
+        return receivedAmount;
     }
 
-    public void setRemainingAmount(String remainingAmount) {
-        this.remainingAmount = remainingAmount;
+    public void setReceivedAmount(String receivedAmount) {
+        this.receivedAmount = receivedAmount;
     }
 
     public int getYear() {
@@ -68,10 +78,11 @@ public class Income {
 
     @Override
     public String toString() {
-        return "Income{" +
+        return "BudgetEntry{" +
                 "title='" + title + '\'' +
+                ", budgetType='" + budgetType + '\'' +
                 ", plannedAmount='" + plannedAmount + '\'' +
-                ", remainingAmount='" + remainingAmount + '\'' +
+                ", receivedAmount='" + receivedAmount + '\'' +
                 ", year=" + year +
                 ", month=" + month +
                 ", day=" + day +

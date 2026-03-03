@@ -1,8 +1,9 @@
 package com.budget.Budget.service;
 
-import com.budget.Budget.model.DBIncome;
-import com.budget.Budget.model.Income;
-import com.budget.Budget.repository.IncomeRepository;
+import com.budget.Budget.enums.BudgetType;
+import com.budget.Budget.model.DBBudgetEntry;
+import com.budget.Budget.model.BudgetEntry;
+import com.budget.Budget.repository.GenericRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,40 +14,46 @@ import java.util.Objects;
 @Service
 public class IncomeService {
     @Autowired
-    private IncomeRepository incomeRepository;
+    private GenericRepository genericRepository;
 
-    public List<Income> getIncomeByYearMonth(Integer year, Integer month) {
-        List<DBIncome> dbIncomes = incomeRepository.findAll().stream().filter(income ->Objects.equals(income.getYear(), year) && Objects.equals(income.getMonth(), month)).toList();
-        List<Income> incomes = new ArrayList<>();
+    public List<BudgetEntry> getIncomeByYearMonth(Integer year, Integer month) {
+        List<DBBudgetEntry> dbBudgetEntries =
+                genericRepository.findAll()
+                        .stream()
+                        .filter(
+                                budgetEntry -> Objects.equals(budgetEntry.getBudgetType(), BudgetType.Income.toString()) && Objects.equals(budgetEntry.getYear(), year) && Objects.equals(budgetEntry.getMonth(), month)).toList();
+        List<BudgetEntry> budgetEntries = new ArrayList<>();
 
-        dbIncomes.forEach(dbIncome -> {
-            Income income = new Income(
-                    dbIncome.getTitle(),
-                    dbIncome.getPlannedAmount(),
-                    dbIncome.getRemainingAmounnt(),
-                    dbIncome.getYear(),
-                    dbIncome.getMonth(),
-                    dbIncome.getDay());
+        dbBudgetEntries.forEach(dbBudgetEntry -> {
+            BudgetEntry budgetEntry = new BudgetEntry(
+                    dbBudgetEntry.getTitle(),
+                    dbBudgetEntry.getBudgetType(),
+                    dbBudgetEntry.getPlannedAmount(),
+                    dbBudgetEntry.getReceivedAmount(),
+                    dbBudgetEntry.getYear(),
+                    dbBudgetEntry.getMonth(),
+                    dbBudgetEntry.getDay());
 
-            incomes.add(income);
+            budgetEntries.add(budgetEntry);
         });
 
-        return incomes;
+        return budgetEntries;
     }
 
-    public String setIncome(Income income) {
+    public String setIncome(BudgetEntry budgetEntry) {
         try {
-            DBIncome dbIncome = new DBIncome();
-            dbIncome.setTitle(income.getTitle());
-            dbIncome.setPlannedAmount(income.getPlannedAmount());
-            dbIncome.setRemainingAmounnt(income.getRemainingAmount());
-            dbIncome.setYear(income.getYear());
-            dbIncome.setMonth(income.getMonth());
-            dbIncome.setDay(income.getDay());
+            DBBudgetEntry dbBudgetEntry = new DBBudgetEntry();
+            dbBudgetEntry.setTitle(budgetEntry.getTitle());
+            dbBudgetEntry.setBudgetType(BudgetType.Income.toString());
+            dbBudgetEntry.setPlannedAmount(budgetEntry.getPlannedAmount());
+            dbBudgetEntry.setReceivedAmount(budgetEntry.getReceivedAmount());
+            dbBudgetEntry.setYear(budgetEntry.getYear());
+            dbBudgetEntry.setMonth(budgetEntry.getMonth());
+            dbBudgetEntry.setDay(budgetEntry.getDay());
 
-            incomeRepository.save(dbIncome);
+            genericRepository.save(dbBudgetEntry);
 
-            return income.getTitle() + " added for " + income.getMonth() + "/" + income.getDay() + "/" + income.getYear();
+            return budgetEntry.getTitle() + " added for " + budgetEntry.getMonth() + "/" + budgetEntry.getDay() + "/" + budgetEntry.getYear();
         } catch (Exception e) {
             return "Save failed due to " +  e.getMessage();
         }
