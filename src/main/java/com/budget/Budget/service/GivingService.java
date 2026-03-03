@@ -1,8 +1,8 @@
 package com.budget.Budget.service;
 
 import com.budget.Budget.enums.BudgetType;
-import com.budget.Budget.model.DBBudgetEntry;
 import com.budget.Budget.model.BudgetEntry;
+import com.budget.Budget.model.DBBudgetEntry;
 import com.budget.Budget.repository.GenericRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,16 +12,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class IncomeService {
+public class GivingService {
+
     @Autowired
     private GenericRepository genericRepository;
 
-    public List<BudgetEntry> getIncomeByYearMonth(Integer year, Integer month) {
+    public List<BudgetEntry> getGivingByYearMonth(Integer year, Integer month) {
         List<DBBudgetEntry> dbBudgetEntries =
                 genericRepository.findAll()
                         .stream()
                         .filter(
-                                budgetEntry -> Objects.equals(budgetEntry.getBudgetType(), BudgetType.Income.toString()) && Objects.equals(budgetEntry.getYear(), year) && Objects.equals(budgetEntry.getMonth(), month)).toList();
+                                budgetEntry -> Objects.equals(budgetEntry.getBudgetType(), BudgetType.Giving.toString()) && Objects.equals(budgetEntry.getYear(), year) && Objects.equals(budgetEntry.getMonth(), month)).toList();
         List<BudgetEntry> budgetEntries = new ArrayList<>();
 
         dbBudgetEntries.forEach(dbBudgetEntry -> {
@@ -40,11 +41,11 @@ public class IncomeService {
         return budgetEntries;
     }
 
-    public String setIncome(BudgetEntry budgetEntry) {
+    public String setGiving(BudgetEntry budgetEntry) {
         try {
             DBBudgetEntry dbBudgetEntry = new DBBudgetEntry();
             dbBudgetEntry.setTitle(budgetEntry.getTitle());
-            dbBudgetEntry.setBudgetType(BudgetType.Income.toString());
+            dbBudgetEntry.setBudgetType(BudgetType.Giving.toString());
             dbBudgetEntry.setPlannedAmount(budgetEntry.getPlannedAmount());
             dbBudgetEntry.setReceivedAmount(budgetEntry.getReceivedAmount());
             dbBudgetEntry.setYear(budgetEntry.getYear());
@@ -53,7 +54,7 @@ public class IncomeService {
 
             genericRepository.save(dbBudgetEntry);
 
-            return "Income from " + budgetEntry.getTitle() + " added for " + budgetEntry.getMonth() + "/" + budgetEntry.getDay() + "/" + budgetEntry.getYear();
+            return "Giving to " + budgetEntry.getTitle() + " added for " + budgetEntry.getMonth() + "/" + budgetEntry.getDay() + "/" + budgetEntry.getYear();
         } catch (Exception e) {
             return "Save failed due to " +  e.getMessage();
         }
