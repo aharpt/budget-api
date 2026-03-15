@@ -6,4 +6,5 @@ public enum BudgetType {
     Savings,
     Subscriptions,
     Spending,
+    Debt,
 }
